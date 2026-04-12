@@ -186,6 +186,7 @@
 
 <main class="main">
   <div class="content">
+    <!-- <button (click)="title.set('Berubah 🔥')">Klik</button> -->
     <div class="left-side">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -234,6 +235,15 @@
       </svg>
       <h1>Hello, {{ title() }}</h1>
       <p>Congratulations! Your app is running. 🎉</p>
+      <p>{{count}}</p>
+      <button (click) = "tambah()">Counter</button>
+      <input type="text" [(ngModel)] = "nama">
+      <p *ngIf="isLogin; else belumlogin">
+        Nama: {{ nama }}
+      </p>
+      <ng-template #belumlogin>
+        <p>Anda belum login</p>
+      </ng-template>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
