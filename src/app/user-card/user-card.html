@@ -1,2 +1,8 @@
-<p>user-card works! {{name()}} {{product()?.price}}</p>
+<p>user-card works! {{name() | uppercase}} {{product()?.price}}</p>
 <button (click)="kirim()">Klik</button>
+<li *ngFor="let user of users">
+    {{ user }}
+</li>
+<input ngModel #userName type="text" placeholder="Enter user name">
+<button (click)="addUser(userName.value)" type="button">Add User</button>
+<p>User Card ID: {{ userCardId }}</p>

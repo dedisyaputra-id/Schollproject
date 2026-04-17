@@ -6,7 +6,9 @@
   <title>Document</title>
 </head>
 <body>
-  <app-user-card  *ngFor="let p of products"
-  [product]="p" (userClicked)="handleUserClicked($event)"></app-user-card>
+  <a href="/" style="padding-right: 15px;">Home</a>
+  <a href="/user-card" style="padding-right: 15px;">User Card</a>
+  <a href="/user-card/123">User Card With ID</a>
+  <router-outlet></router-outlet>
 </body>
 </html>
