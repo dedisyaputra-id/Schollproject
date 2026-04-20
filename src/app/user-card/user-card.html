@@ -1,8 +1,17 @@
-<p>user-card works! {{name() | uppercase}} {{product()?.price}}</p>
-<button (click)="kirim()">Klik</button>
-<li *ngFor="let user of users">
-    {{ user }}
+<h2>Daftar User</h2>
+
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.name }} - {{ user.email }}
+     {{ user | json }}
+
+     <button (click)="updateUser(user.id, { name: name, email: email })">Update User</button>
+      <button (click)="deleteUser(user.id)">Delete User</button>
 </li>
-<input ngModel #userName type="text" placeholder="Enter user name">
-<button (click)="addUser(userName.value)" type="button">Add User</button>
-<p>User Card ID: {{ userCardId }}</p>
+</ul>
+
+<p>{{ name }} - {{ email }}</p>
+
+<input type="text" [(ngModel)]="name" placeholder="Nama User">
+<input type="text" [(ngModel)]="email" placeholder="Email">
+<button (click)="saveUser({ name: name, email: email })">Tambah User</button>

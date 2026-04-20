@@ -10,30 +10,75 @@ import { User } from '../services/user';
   styleUrl: './user-card.css',
 })
 export class UserCard {
-  constructor(private userService: User) {
-    this.users = this.userService.getUsers();
-}
+  users: any[] = [];
 
-  addUser(name: string){
-    this.userService.addUser(name);
-    this.users = this.userService.getUsers();
-  }
-
-  users: string [] = [];
-
-  name = input<string>();
-  product = input<any>();
-  userClicked = output<string>();
-  kirim (){
-    this.userClicked.emit('Hello dari child user card');
-  }
-
-  private route = inject(ActivatedRoute);
-  userCardId: string | null = null;
+  constructor(private userService: User) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.userCardId = params.get('id');
+    this.userService.getUsers().subscribe({
+       next: (data) => {
+        this.users = data;
+        console.log('Data berhasil diambil:', this.users);
+      },
+      error: (err) => {
+        console.error('Error ambil data:', err);
+      }
+    })
+  }
+
+  name: string = '';
+  email: string = '';
+
+  saveUser(user: any){
+    const data = {
+      name : this.name,
+      email : this.email
+    }
+    this.userService.addUser(data).subscribe({
+      next: (data) => {
+        alert('User berhasil ditambahkan!');
+        console.log('User berhasil ditambahkan:', data);
+        this.users.push(data);
+      },
+      error: (err) => {
+        alert('Gagal menambahkan user!');
+        console.error('Error menambahkan user:', err);
+      }
+    });
+  }
+
+  updateUser(id: number, user: any){
+    const data = {
+      name : this.name,
+      email : this.email
+    }
+    this.userService.updateUser(id, data).subscribe({
+      next: (data) => {
+        alert('User berhasil diupdate!');
+        console.log('User berhasil diupdate:', data);
+        const index = this.users.findIndex((u) => u.id === id);
+        if (index !== -1) {
+          this.users[index] = data;
+        }
+      },
+      error: (err) => {
+        alert('Gagal mengupdate user!');
+        console.error('Error mengupdate user:', err);
+      }
+    });
+  }
+
+  deleteUser(id: number){
+    this.userService.deleteUser(id).subscribe({
+      next: () => {
+        alert('User berhasil dihapus!');
+        console.log('User berhasil dihapus');
+        this.users = this.users.filter((u) => u.id !== id);
+      },
+      error: (err) => {
+        alert('Gagal menghapus user!');
+        console.error('Error menghapus user:', err);
+      }
     });
   }
 }

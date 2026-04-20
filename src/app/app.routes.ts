@@ -4,5 +4,5 @@ import { Home } from './home/home';
 
 export const routes: Routes = [
     {path: '', component: Home},
-    {path: 'user-card/:id', component: UserCard}
+    {path: 'user-card', component: UserCard}
 ];
